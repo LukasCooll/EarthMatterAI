@@ -4,13 +4,17 @@ from sahi.predict import get_sliced_prediction
 import location
 import GettingClimate
 import torch
+import GettingFile
+import AiResponce
 
-
-IMG_PATH = r"C:\Users\lukas_70j9se5\Downloads\tbilisi-noi-tiflisi-aghmashenebeli-avenue-3-m.webp"
+IMG_PATH = GettingFile.Save_Root()
 MODEL_PATH = 'yolov8x-oiv7.pt'
 CONF_THRESHOLD = 0.25
 IOU_THRESHOLD  = 0.45
 IMG_SIZE       = 1280
+
+
+
 
 TARGET_CLASSES = {
     'Tree', 'Plant', 'Person', 'Car', 'Truck',
@@ -107,8 +111,7 @@ longitude = location.get_longitute()
 latitude  = location.get_latitute()
 print(f"Coordinates: lat={latitude}, lon={longitude}")
 
-climate_data = GettingClimate.get_climate_data(longitude, latitude)
-print(f"Climate Data: {climate_data}")
+Climate = GettingClimate.get_climate_data(longitude, latitude)
 
 
 def Green_Index():
@@ -158,10 +161,10 @@ def FinalRep():
     print(f"Model         : {MODEL_PATH}")
     print(f"Location      : {geo_info}")
     print(f"Coordinates   : lat={latitude}, lon={longitude}")
-    print(f"Climate       : {climate_data}")
     print(f"Green Coverage Index: {Green_Index()}")
     print(f"Traffic Density Index: {TrafficIndex()}")
     print(f"Human Activity Index: {HumanDensityIndex()}")
+    print(f"Climate: {Climate}")
     print(f"\nDetected Objects (merged):")
     for cls, count in sorted(merged_counts.items()):
         if count > 0:
@@ -169,3 +172,4 @@ def FinalRep():
 
 
 FinalRep()
+AiResponce.GetPromptAndResponse()

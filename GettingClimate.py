@@ -14,4 +14,4 @@ def get_climate_data(lat, lon):
     closest_row = df.loc[df['total_diff'].idxmin()]
     climate_code = closest_row['Cls']
 
-    print("Climate code at location:", climate_code)
+    return "Climate code at location:", climate_code
