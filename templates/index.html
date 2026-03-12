@@ -1,0 +1,20 @@
+<input type="file" id="fileInput" style="display:none">
+<button onclick="document.getElementById('fileInput').click()">Select File</button>
+
+<p id="result"></p>
+
+<script>
+    document.getElementById("fileInput").addEventListener("change", function() {
+        const filePath = this.files[0].name;
+        
+        fetch("/get-path", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: filePath })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("result").innerText = data.path;
+        });
+    });
+</script>

@@ -6,13 +6,15 @@ import GettingClimate
 import torch
 import GettingFile
 import AiResponce
+import imagecreation
+import main
 
-IMG_PATH = GettingFile.Save_Root()
+
+IMG_PATH = main.get_path()
 MODEL_PATH = 'yolov8x-oiv7.pt'
 CONF_THRESHOLD = 0.25
 IOU_THRESHOLD  = 0.45
 IMG_SIZE       = 1280
-
 
 
 
@@ -60,7 +62,7 @@ sahi_model = AutoDetectionModel.from_pretrained(
     model_type='yolov8',
     model_path=MODEL_PATH,
     confidence_threshold=CONF_THRESHOLD,
-    device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+    device='cuda:0' if torch.cuda.is_available() else 'cpu'
 )
 
 sahi_result = get_sliced_prediction(
@@ -87,7 +89,6 @@ for cls, count in sorted(sahi_counts.items()):
     if count > 0:
         print(f"  {cls:<15}: {count}")
 
-
 sahi_result.export_visuals(export_dir="sahi_output/")
 print("\nSAHI visual saved to: sahi_output/")
 
@@ -104,7 +105,7 @@ for cls, count in sorted(merged_counts.items()):
 
 print("\n========== LOCATION & CLIMATE ==========")
 
-geo_info = location.get_ip_geolocation()
+geo_info  = location.get_ip_geolocation()
 print(f"Geolocation: {geo_info}")
 
 longitude = location.get_longitute()
@@ -121,13 +122,11 @@ def Green_Index():
         merged_counts.get('Houseplant', 0) +
         merged_counts.get('Flowerpot', 0)
     )
-
     total_objects = sum(merged_counts.values())
-
     if total_objects == 0:
         return 0
+    return round(green_objects / total_objects, 2)
 
-    return round(green_objects / total_objects,2)
 
 def TrafficIndex():
     traffic_objects = (
@@ -137,22 +136,18 @@ def TrafficIndex():
         merged_counts.get('Motorcycle', 0) +
         merged_counts.get('Vehicle', 0)
     )
-
     total_objects = sum(merged_counts.values())
-
     if total_objects == 0:
         return 0
-    else:
-        return round(traffic_objects / total_objects,2)
+    return round(traffic_objects / total_objects, 2)
+
 
 def HumanDensityIndex():
     human_objects = merged_counts.get('Person', 0)
-
     total_objects = sum(merged_counts.values())
     if total_objects == 0:
         return 0
-    else:
-        return round(human_objects / total_objects,2)
+    return round(human_objects / total_objects, 2)
 
 
 def FinalRep():
@@ -161,9 +156,9 @@ def FinalRep():
     print(f"Model         : {MODEL_PATH}")
     print(f"Location      : {geo_info}")
     print(f"Coordinates   : lat={latitude}, lon={longitude}")
-    print(f"Green Coverage Index: {Green_Index()}")
+    print(f"Green Coverage Index : {Green_Index()}")
     print(f"Traffic Density Index: {TrafficIndex()}")
-    print(f"Human Activity Index: {HumanDensityIndex()}")
+    print(f"Human Activity Index : {HumanDensityIndex()}")
     print(f"Climate: {Climate}")
     print(f"\nDetected Objects (merged):")
     for cls, count in sorted(merged_counts.items()):
@@ -172,4 +167,14 @@ def FinalRep():
 
 
 FinalRep()
-AiResponce.GetPromptAndResponse()
+
+
+Responce = AiResponce.GetPromptAndResponse(
+    green_idx=Green_Index(),
+    traffic_idx=TrafficIndex(),
+    human_idx=HumanDensityIndex(),
+    climate=Climate,
+)
+
+print(Responce)
+imagecreation.CreateIMG(IMG_PATH,Responce)

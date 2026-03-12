@@ -1,13 +1,20 @@
-from fastapi import FastAPI
+from flask import Flask, render_template, jsonify, request
+import GettingFile
+import ObjRecognition
+app = Flask(__name__)
 
-app = FastAPI()
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/get-path", methods=["POST"])
+def get_path():
+    IMG_PATH = GettingFile.Save_Root()
+    return jsonify({"path": IMG_PATH})
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
 
 
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
