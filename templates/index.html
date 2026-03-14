@@ -1,20 +1,69 @@
-<input type="file" id="fileInput" style="display:none">
-<button onclick="document.getElementById('fileInput').click()">Select File</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Image</title>
+</head>
+<body>
 
-<p id="result"></p>
+<h2>Select Image</h2>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="image" accept="image/*" required>
+
+    <label for="living_type">Indoor or Outdoor settlement?</label>
+    <select name="living_type" id="living_type" required>
+        <option value="Indoor">Indoor</option>
+        <option value="Outdoor">Outdoor</option>
+    </select>
+
+    <button type="submit">Analyze</button>
+</form>
+
+
+<div id="resultContainer" style="margin-top:20px;">
+    <h3>AI Analysis Result:</h3>
+    <pre id="resultText"></pre>
+</div>
+
+<div id="Indexes">
+    <p>Green Index: <span id="greenIndex"></span></p>
+    <p>Traffic Index: <span id="trafficIndex"></span></p>
+    <p>Human Index: <span id="humanIndex"></span></p>
+</div>
+
+<div id="resultImage" style="margin-top:20px;">
+    <h3>Annotated Image:</h3>
+    <img id="result-img" alt="Detection result" style="max-width: 100%;" />
+</div>
 
 <script>
-    document.getElementById("fileInput").addEventListener("change", function() {
-        const filePath = this.files[0].name;
-        
-        fetch("/get-path", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ path: filePath })
-        })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("result").innerText = data.path;
-        });
+document.getElementById("uploadForm").onsubmit = async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    const res = await fetch("/upload", {
+        method: "POST",
+        body: formData
     });
+
+    const data = await res.json();
+
+
+    const resultText = document.getElementById("resultText");
+    resultText.textContent = data.result?.ai_response || (data.error ? "Error: " + data.error : "No result returned.");
+
+
+    document.getElementById("greenIndex").textContent = data.green_index;
+    document.getElementById("trafficIndex").textContent = data.traffic_index;
+    document.getElementById("humanIndex").textContent = data.human_index;
+
+
+    if (data.annotated_image) {
+        document.getElementById("result-img").src = data.annotated_image;
+    }
+};
 </script>
+
+</body>
+</html>
