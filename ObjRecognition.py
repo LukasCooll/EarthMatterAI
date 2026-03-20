@@ -15,8 +15,9 @@ IOU_THRESHOLD  = 0.45
 IMG_SIZE       = 1280
 
 TARGET_CLASSES = {
-    'Tree', 'Plant', 'Person', 'Car', 'Truck',
-    'Bus', 'Motorcycle', 'Vehicle', 'Flowerpot', 'Houseplant'
+    'Tree', 'Plant', 'Person',
+    'Car', 'Truck', 'Bus', 'Motorcycle',
+    'Flowerpot', 'Houseplant'
 }
 
 

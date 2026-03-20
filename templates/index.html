@@ -1,69 +1,929 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+
 <head>
-    <title>Upload Image</title>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+    <style>
+
+        @font-face {
+
+  font-family: 'Horizon';
+
+  src: url("{{ url_for('static', filename='Font/Horizon.woff2') }}") format('woff2');
+
+  font-weight: 400;
+
+  font-style: normal;
+
+}
+
+
+
+/* RESET / BASE */
+
+body {
+
+  margin: 0;
+
+  padding: 10px;
+
+  position: relative;
+
+  z-index: 0;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+
+
+/* BLURRED BACKGROUND */
+
+body::before {
+
+  content: "";
+
+  position: fixed;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  background-image: url("{{ url_for('static', filename='Images/pexels-43717008-7404451.jpg') }}");
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  background-position: center;
+
+  filter: blur(5px);
+
+  z-index: -1;
+
+}
+
+
+
+section {
+
+  width: 100%;
+
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  background-color: #F8F9FA;
+
+  padding: 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+}
+
+
+
+.logo-text {
+
+  font-size: 24px;
+
+  letter-spacing: 1px;
+
+  color: #00bf63;
+
+}
+
+
+
+.raised-m {
+
+  display: inline-block;
+
+  transform: scaleY(1.8);
+
+  transform-origin: bottom center;
+
+  color: black;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  vertical-align: bottom;
+
+}
+
+
+
+.analyzer {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  flex-direction: column;
+
+  gap: 20px;
+
+  height: auto;
+
+  padding: 20px 0;
+
+}
+
+
+
+.analyzersumbit {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+
+}
+
+
+
+.uploader {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 20px;
+
+  width: 100%;
+
+}
+
+
+
+.custum-file-upload {
+
+  height: 200px;
+
+  width: 100%;
+
+  max-width: 300px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+
+  cursor: pointer;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: 2px dashed #cacaca;
+
+  background-color: white;
+
+  padding: 1.5rem;
+
+  border-radius: 10px;
+
+  box-shadow: 0px 48px 35px -48px rgba(0,0,0,0.1);
+
+  text-align: center;
+
+}
+
+
+
+.custum-file-upload .icon {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+.custum-file-upload .icon svg {
+
+  height: 80px;
+
+  fill: rgba(75, 85, 99, 1);
+
+}
+
+
+
+.custum-file-upload .text span {
+
+  font-weight: 400;
+
+  color: rgba(75, 85, 99, 1);
+
+}
+
+
+
+.custum-file-upload input {
+
+  display: none;
+
+}
+
+
+
+.form-group {
+
+  margin: 20px;
+
+  max-width: 300px;
+
+  width: 100%;
+
+}
+
+
+
+label {
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: 600;
+
+  color: #333;
+
+}
+
+
+
+/* SELECT */
+
+.select-wrapper {
+
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+
+}
+
+
+
+select {
+
+  width: 100%;
+
+  max-width: 300px;
+
+  padding: 12px 16px;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  color: #444;
+
+  background-color: #fff;
+
+  border: 2px solid #e0e0e0;
+
+  border-radius: 8px;
+
+  appearance: none;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+
+  text-align: center;
+
+}
+
+
+
+select:hover {
+
+  border-color: #b0b0b0;
+
+}
+
+
+
+select:focus {
+
+  outline: none;
+
+  border-color: #4A90E2;
+
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+
+}
+
+
+
+.select-wrapper::after {
+
+  content: '▼';
+
+  font-size: 12px;
+
+  top: 50%;
+
+  right: 15px;
+
+  transform: translateY(-50%);
+
+  position: absolute;
+
+  pointer-events: none;
+
+  color: #888;
+
+}
+
+
+
+.btn-primary {
+
+  background-color: white;
+
+  color: black;
+
+  border-radius: 10em;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  padding: 1em 2em;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease-in-out;
+
+  border: 1px solid #444;
+
+  box-shadow: 0 0 0 0 black;
+
+}
+
+
+
+.btn-primary:hover {
+
+  border-color: #b0b0b0;
+
+}
+
+
+
+.btn-primary:active {
+
+  transform: translateY(2px) translateX(1px);
+
+  box-shadow: 0 0 0 0 black;
+
+}
+
+
+
+.postanalysis {
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 30px;
+
+  margin-top: 40px;
+
+  width: 100%;
+
+}
+
+
+
+.card-box {
+
+  background: white;
+
+  border-radius: 15px;
+
+  padding: 20px;
+
+  box-shadow: 0px 10px 25px rgba(0,0,0,0.08);
+
+  width: 100%;
+
+  /* Fix card height so boxes don't grow with content */
+  box-sizing: border-box;
+
+}
+
+
+
+/* ── AI Analysis box: fixed height, scrollable text ── */
+
+.card-box.analysis-box {
+
+  height: 320px;
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+
+.card-box.analysis-box pre#resultText {
+
+  flex: 1;
+
+  overflow-y: auto;
+
+  white-space: pre-wrap;
+
+  word-break: break-word;
+
+  margin: 0;
+
+  padding: 4px 0;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+}
+
+
+
+/* ── Indexes box: same fixed height ── */
+
+.card-box.indexes-box {
+
+  height: 320px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow-y: auto;
+
+}
+
+
+
+/* ── Annotated Image box: fixed height, image fills it ── */
+
+.card-box.image-box {
+
+  grid-column: span 2;
+
+  height: 420px;
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+
+.card-box.image-box h3 {
+
+  flex-shrink: 0;
+
+  margin-bottom: 10px;
+
+}
+
+
+
+.image-wrapper {
+
+  flex: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 8px;
+
+  background: #f0f0f0;
+
+}
+
+
+
+#result-img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: contain;
+
+  border-radius: 8px;
+
+  display: block;
+
+}
+
+
+
+#fa {
+
+  margin-right: 10px;
+
+  font-size: 20px;
+
+}
+
+
+
+@media (max-width: 992px) {
+
+  .card-box.analysis-box,
+  .card-box.indexes-box {
+    height: 280px;
+  }
+
+  .card-box.image-box {
+    height: 360px;
+  }
+
+}
+
+
+
+@media (max-width: 768px) {
+
+
+
+  .postanalysis {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+
+  .card-box.image-box {
+
+    grid-column: span 1;
+
+    height: 300px;
+
+  }
+
+
+
+  .logo-text {
+
+    font-size: 18px;
+
+  }
+
+
+
+}
+
+
+
+@media (max-width: 480px) {
+
+
+
+  .custum-file-upload {
+
+    height: 180px;
+
+    padding: 1rem;
+
+  }
+
+
+
+  .btn-primary {
+
+    width: 100%;
+
+  }
+
+
+
+  h2 {
+
+    font-size: 20px;
+
+  }
+
+
+
+  .card-box.analysis-box,
+  .card-box.indexes-box {
+    height: 260px;
+  }
+
+  .card-box.image-box {
+    height: 250px;
+  }
+
+}
+
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
 </head>
+
 <body>
+
+<header>
+
+<nav class="navbar bg-body-tertiary">
+
+  <div class="container-fluid">
+
+    <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="#" style="font-family: Horizon;">
+
+  <img src="{{ url_for('static', filename='Images/Logo2.png') }}" width="50" height="50">
+
+  
+
+  <span class="logo-text">
+
+    Earth<span class="raised-m">M</span>atter AI
+
+  </span>
+
+</a>
+
+  </div>
+
+</nav>
+
+</header>
+
+
+
+<section class="uploader">
+
+<div class="analyzer">
+
+    
 
 <h2>Select Image</h2>
 
+
+
 <form id="uploadForm" enctype="multipart/form-data">
-    <input type="file" name="image" accept="image/*" required>
+
+    <label class="custum-file-upload" id="dropArea">
+
+        <div class="icon">
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+
+                <path d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z"/>
+
+            </svg>
+
+        </div>
+
+        <div class="text">
+
+            <span id="fileName">Click or drag an image here</span>
+
+        </div>
+
+        <input type="file" id="fileInput" name="image" accept="image/*" required>
+
+    </label>
+
+
 
     <label for="living_type">Indoor or Outdoor settlement?</label>
-    <select name="living_type" id="living_type" required>
+
+    <div class="analyzersumbit">
+
+        <select name="living_type" id="living_type" required>
+
         <option value="Indoor">Indoor</option>
+
         <option value="Outdoor">Outdoor</option>
+
     </select>
 
-    <button type="submit">Analyze</button>
+
+
+    <button class="btn-primary" type="submit">Analyze</button>
+
+    </div>
+
 </form>
 
+</div>
 
-<div id="resultContainer" style="margin-top:20px;">
-    <h3>AI Analysis Result:</h3>
+
+
+<div class="postanalysis">
+
+  <!-- AI Analysis: fixed height, scrollable text -->
+  <div class="card-box analysis-box">
+
+    <h3><i class="fa-solid fa-brain"></i> AI Analysis</h3>
+
     <pre id="resultText"></pre>
+
+  </div>
+
+
+
+  <!-- Indexes: same fixed height -->
+  <div class="card-box indexes-box">
+
+    <h3><i class="fa-solid fa-chart-pie"></i> Indexes</h3>
+
+    <p><i class="fa-solid fa-tree"></i> Green Coverage Index: <span id="greenIndex"></span></p>
+
+    <p><i class="fa-solid fa-car"></i> Traffic Density Index: <span id="trafficIndex"></span></p>
+
+    <p><i class="fa-solid fa-user"></i> Human Activity Index: <span id="humanIndex"></span></p>
+
+  </div>
+
+
+
+  <!-- Annotated Image: fixed height, image contained inside -->
+  <div class="card-box image-box">
+
+    <h3><i class="fa-solid fa-file-image"></i> Annotated Image</h3>
+
+    <div class="image-wrapper">
+
+      <img onerror="this.onerror=null; this.src='placeholder.png';" id="result-img" alt="Annotated result" />
+
+    </div>
+
+  </div>
+
+
+
 </div>
 
-<div id="Indexes">
-    <p>Green Index: <span id="greenIndex"></span></p>
-    <p>Traffic Index: <span id="trafficIndex"></span></p>
-    <p>Human Index: <span id="humanIndex"></span></p>
-</div>
 
-<div id="resultImage" style="margin-top:20px;">
-    <h3>Annotated Image:</h3>
-    <img id="result-img" alt="Detection result" style="max-width: 100%;" />
-</div>
+
+<div></div>
+
+
+
+</section>
+
+
 
 <script>
-document.getElementById("uploadForm").onsubmit = async function(e) {
+
+const fileInput = document.getElementById('fileInput');
+
+const dropArea = document.getElementById('dropArea');
+
+const fileNameLabel = document.getElementById('fileName');
+
+
+
+fileInput.addEventListener('change', () => {
+
+    if(fileInput.files.length > 0){
+
+        fileNameLabel.textContent = fileInput.files[0].name;
+
+    } else {
+
+        fileNameLabel.textContent = "Click or drag an image here";
+
+    }
+
+});
+
+
+
+dropArea.addEventListener('dragover', (e) => {
+
     e.preventDefault();
+
+    dropArea.style.borderColor = "#3b82f6"; 
+
+});
+
+dropArea.addEventListener('dragleave', () => {
+
+    dropArea.style.borderColor = "#cacaca";
+
+});
+
+dropArea.addEventListener('drop', (e) => {
+
+    e.preventDefault();
+
+    dropArea.style.borderColor = "#cacaca";
+
+    const files = e.dataTransfer.files;
+
+    if(files.length > 0){
+
+        fileInput.files = files;
+
+        fileNameLabel.textContent = files[0].name;
+
+    }
+
+});
+
+
+
+document.getElementById("uploadForm").onsubmit = async function(e) {
+
+    e.preventDefault();
+
+
 
     const formData = new FormData(this);
 
+
+
     const res = await fetch("/upload", {
+
         method: "POST",
+
         body: formData
+
     });
+
+
 
     const data = await res.json();
 
 
+
     const resultText = document.getElementById("resultText");
+
     resultText.textContent = data.result?.ai_response || (data.error ? "Error: " + data.error : "No result returned.");
 
 
+
     document.getElementById("greenIndex").textContent = data.green_index;
+
     document.getElementById("trafficIndex").textContent = data.traffic_index;
+
     document.getElementById("humanIndex").textContent = data.human_index;
 
 
+
     if (data.annotated_image) {
+
         document.getElementById("result-img").src = data.annotated_image;
+
     }
+
 };
+
 </script>
 
 </body>
+
 </html>

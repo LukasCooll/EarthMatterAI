@@ -33,6 +33,7 @@ def upload():
 
     annotated_image_b64 = ObjRecognition.get_annotated_image_base64(result["results"])
 
+
     return jsonify({
         "image_path": path,
         "annotated_image_path": annotated_image_path,
@@ -46,4 +47,4 @@ def upload():
     })
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
