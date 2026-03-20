@@ -1,8 +1,7 @@
 import pandas as pd
 
 
-df = pd.read_csv("Koeppen-Geiger-ASCII.txt", delim_whitespace=True)
-
+df = pd.read_csv("Koeppen-Geiger-ASCII.txt", sep=r"\s+")
 
 def get_climate_data(lat, lon):
 
