@@ -8,4 +8,3 @@ numpy
 pandas
 openai
 python-dotenv
-Base64
