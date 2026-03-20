@@ -1,0 +1,11 @@
+flask
+gunicorn
+ultralytics
+sahi
+torch
+opencv-python
+numpy
+pandas
+openai
+python-dotenv
+Base64
