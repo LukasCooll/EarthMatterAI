@@ -22,7 +22,7 @@ EarthMatterAI is a Flask-based web application that analyzes images to assess en
   - SAHI (Sliced Aided Hyper Inference)
 - **AI Analysis**: OpenAI API
 - **Image Processing**: OpenCV
-- **Frontend**: HTML/JavaScript (vanilla)
+- **Frontend**: Vanilla HTML/JavaScript
 
 ## Project Structure
 
