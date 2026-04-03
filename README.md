@@ -206,4 +206,4 @@ For issues, questions, or suggestions, please open an issue on [GitHub](https://
 - [SAHI - Sliced Aided Hyper Inference](https://github.com/obss/sahi)
 - [OpenAI API](https://openai.com/api/)
 
-This revised README provides a comprehensive overview of the EarthMatterAI project, detailing its features, installation instructions, usage, and more, while ensuring clarity and coherence throughout the document.
+This revised README provides a comprehensive overview of the EarthMatterAI project, detailing its features, installation instructions, usage, and more, while ensuring clarity and coherence throughout the document!
