@@ -12,7 +12,8 @@ client = OpenAI(
 )
 
 
-def GetPromptAndResponse(green_idx, traffic_idx, human_idx, climate, living_type):
+
+def GetPromptAndResponse(green_idx, traffic_idx, human_idx, climate, living_type,Additionalinfo):
 
     climate_str = str(climate)
 
@@ -43,7 +44,7 @@ def GetPromptAndResponse(green_idx, traffic_idx, human_idx, climate, living_type
     - Human Activity Index: {human_idx}
     - Climate: {climate_str}
     - Living situation: {living_type} settlement
-
+    - additional info provided by user: {Additionalinfo}
     Provide your answer in the following format:
 
     Environmental Assessment:
@@ -65,3 +66,4 @@ def GetPromptAndResponse(green_idx, traffic_idx, human_idx, climate, living_type
 
     result = response.choices[0].message.content
     return result
+

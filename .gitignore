@@ -5,3 +5,8 @@
    build/
    __pycache__/
    .DS_Store
+   .vs/
+   *.pyc
+   uploads/
+   *.db
+   *.sqlite

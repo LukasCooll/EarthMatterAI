@@ -23,8 +23,9 @@ def upload():
     file.save(path)
 
     living_type = request.form.get("living_type", "Indoor")
+    prompt = request.form.get("prompt")
 
-    result = ObjRecognition.run_detection(path, living_type=living_type)
+    result = ObjRecognition.run_detection(path, living_type=living_type, prompt=prompt)
     green_index = result["green_index"]
     traffic_index = result["traffic_index"]
     human_index = result["human_index"]

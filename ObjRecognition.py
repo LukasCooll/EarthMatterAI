@@ -17,7 +17,38 @@ IMG_SIZE       = 1280
 TARGET_CLASSES = {
     'Tree', 'Plant', 'Person',
     'Car', 'Truck', 'Bus', 'Motorcycle',
-    'Flowerpot', 'Houseplant'
+    'Flowerpot', 'Houseplant',"palm tree",
+    "christmas tree",
+    "tree trunk",
+    "tree house","flower",
+    "grass",
+    "shrub",
+    "bush","sunflower",
+    "tulip",
+    "daisy",
+    "lily",
+    "forest",
+    "jungle",
+    "garden",
+    "park",
+    "field",
+    "farmland",
+    "meadow",
+    "soil",
+    "ground",
+    "rock",
+    "sand",
+    "hill",
+    "mountain",
+    "riverbank",
+    "river",
+    "lake",
+    "pond",
+    "waterfall",
+    "wetland",
+    "leaf",
+    "seed",
+    "bark"
 }
 
 
@@ -29,14 +60,7 @@ def get_annotated_image_base64(results):
     return f"data:image/jpeg;base64,{b64_string}"
 
 
-def run_detection(img_path, living_type="Indoor"):
-    """
-    Runs YOLO + SAHI detection, calculates indices, generates AI report and visualizations.
-    img_path: path to image
-    living_type: "Indoor" or "Outdoor" (from HTML form)
-    """
-
-    # ===== YOLO INFERENCE =====
+def run_detection(img_path, living_type="Indoor", prompt=None):
     model = YOLO(MODEL_PATH)
     results = model(
         img_path,
@@ -106,8 +130,30 @@ def run_detection(img_path, living_type="Indoor"):
                 merged_counts.get('Vehicle', 0)
         )
         human_objects = merged_counts.get('Person', 0)
+        green_classes = {
+            'Tree', 'Plant', 'Houseplant', 'Flowerpot',
+            'palm tree', 'christmas tree', 'tree trunk', 'tree house',
+            'flower', 'grass', 'shrub', 'bush',
+            'sunflower', 'tulip', 'daisy', 'lily',
+            'forest', 'jungle', 'garden', 'park',
+            'field', 'farmland', 'meadow',
+            'leaf', 'seed', 'bark'
+        }
 
-        green_index = round(green_objects / total_objects, 2) if total_objects else 0
+        green_objects = sum(merged_counts.get(cls, 0) for cls in green_classes)
+
+        ignore_classes = {
+            'rock', 'sand', 'soil', 'ground',
+            'hill', 'mountain',
+            'river', 'lake', 'pond', 'waterfall', 'wetland', 'riverbank'
+        }
+
+        valid_total = sum(
+            count for cls, count in merged_counts.items()
+            if cls not in ignore_classes
+        )
+
+        green_index = round(green_objects / valid_total, 2) if valid_total else 0
         traffic_index = round(traffic_objects / total_objects, 2) if total_objects else 0
         human_index = round(human_objects / total_objects, 2) if total_objects else 0
 
@@ -120,7 +166,8 @@ def run_detection(img_path, living_type="Indoor"):
         traffic_idx=traffic_index,
         human_idx=human_index,
         climate=climate,
-        living_type=living_type
+        living_type=living_type,
+        Additionalinfo = prompt
     )
 
     print("\n========== FINAL REPORT ==========")

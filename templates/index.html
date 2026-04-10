@@ -26,8 +26,11 @@
 
 
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 body {
 
   margin: 0;
@@ -279,9 +282,12 @@ label {
 }
 
 
+<<<<<<< Updated upstream
 
 
 
+=======
+>>>>>>> Stashed changes
 .select-wrapper {
 
   position: relative;
@@ -440,14 +446,20 @@ select:focus {
 
   width: 100%;
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   box-sizing: border-box;
 
 }
 
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 .card-box.analysis-box {
 
@@ -497,7 +509,10 @@ select:focus {
 
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 .card-box.image-box {
 
@@ -659,6 +674,50 @@ select:focus {
 
 }
 
+    #info-box {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+
+    #info-box:popover-open {
+      animation: fade-in 0.2s ease;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+.prompt {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prompt textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  font-size: 14px;
+  min-height: 80px;
+  resize: vertical;
+}
+
+
+.btn-primary {
+  padding: 12px;
+  border-radius: 30px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -731,7 +790,19 @@ select:focus {
 
         <input type="file" id="fileInput" name="image" accept="image/*" required>
 
+
     </label>
+
+<div class="prompt">
+<button style="width: 20px; height: 15px; background: transparent; border: none;" type="button" popovertarget="info-box"><i class="fa-solid fa-circle-info"></i></button>
+<textarea name="prompt" id="prompt"
+placeholder="Opltional: Additional info"></textarea>
+
+
+<div id="info-box" popover>
+You can guide AI here and write additional info, like how many people live in the area, if someone has allergy to specific plant and etc.
+</div>
+</div>
 
 
 
@@ -747,6 +818,7 @@ select:focus {
 
     </select>
 
+  
 
 
     <button class="btn-primary" type="submit">Analyze</button>
@@ -761,7 +833,10 @@ select:focus {
 
 <div class="postanalysis">
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   <div class="card-box analysis-box">
 
     <h3><i class="fa-solid fa-brain"></i> AI Analysis</h3>
@@ -787,7 +862,10 @@ select:focus {
 
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   <div class="card-box image-box">
 
     <h3><i class="fa-solid fa-file-image"></i> Annotated Image</h3>

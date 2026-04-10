@@ -62,7 +62,8 @@
               "RelativeToolTip": "README.md",
               "ViewState": "AgIAAM8AAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2026-03-14T09:54:00.113Z"
+              "WhenOpened": "2026-03-14T09:54:00.113Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -72,7 +73,7 @@
               "RelativeDocumentMoniker": "main.py",
               "ToolTip": "C:\\Users\\lukas_70j9se5\\Desktop\\EarthMatterAI\\main.py",
               "RelativeToolTip": "main.py",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2026-03-14T09:53:22.571Z",
               "EditorCaption": ""
